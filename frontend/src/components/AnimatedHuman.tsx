@@ -40,7 +40,7 @@ export function Human(props: ModelProps) {
   const { actions } = useAnimations(animations, group)
 
   console.log(actions);
-  const [animation, setAnimation] = useState<ActionName>("Human Armature|Idle")
+  const [animation, setAnimation] = useState<ActionName>("Human Armature|Run")
   useEffect(() => {
     actions[animation]?.reset().fadeIn(0.5).play();
     return () => {
