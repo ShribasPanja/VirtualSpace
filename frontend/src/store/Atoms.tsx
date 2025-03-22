@@ -9,6 +9,7 @@ type MapItem = {
   name: string;
   size: number[];
   gridPosition: number[];
+  rotation: number;
 };
 
 export const mapState = atom<{

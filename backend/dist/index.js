@@ -41,7 +41,14 @@ const map = {
     size: [10, 10],
     subdivisions: 2,
     items: [
-        Object.assign(Object.assign({}, items.Chair), { gridPosition: [0, 0] }),
+        Object.assign(Object.assign({}, items.Chair), { gridPosition: [4, 11], rotation: 1 }),
+        Object.assign(Object.assign({}, items.Chair), { gridPosition: [4, 16], rotation: 3 }),
+        Object.assign(Object.assign({}, items.Sink), { gridPosition: [8, 4] }),
+        Object.assign(Object.assign({}, items.Cuttingtable), { gridPosition: [11, 4] }),
+        Object.assign(Object.assign({}, items.Roundtable), { gridPosition: [4, 13] }),
+        Object.assign(Object.assign({}, items.Oven), { gridPosition: [14, 4] }),
+        Object.assign(Object.assign({}, items.Fridge), { gridPosition: [17, 4], rotation: 1 }),
+        Object.assign(Object.assign({}, items.BigVegTable), { gridPosition: [11, 10] }),
     ],
 };
 io.on("connection", (socket) => {

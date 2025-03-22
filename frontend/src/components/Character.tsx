@@ -37,10 +37,15 @@ type GLTFResult = GLTF & {
   animations: GLTFAction[];
 };
 
-export function GenericFemale(
-  props: React.ComponentProps<"group"> & { position?: Vector3 }
-) {
-  const position = useMemo(() => props.position || new Vector3(0, 0, 0), []);
+export function GenericFemale({
+  position,
+  id,
+  ...props
+}: {
+  position?: Vector3;
+  id: string;
+} & Omit<React.ComponentProps<"group">, "id">) {
+  const positionMemo = useMemo(() => position || new Vector3(0, 0, 0), []);
   const group = useRef<THREE.Group>(null);
   const targetPosition = useRef(new Vector3());
   const { scene, animations } = useGLTF("/models/CUTES/Generic Female.glb");
@@ -52,10 +57,10 @@ export function GenericFemale(
   const previousAnimation = useRef<ActionName>("Armature|Idle");
 
   useEffect(() => {
-    if (props.position) {
-      targetPosition.current.copy(props.position);
+    if (position) {
+      targetPosition.current.copy(position);
     }
-  }, [props.position]);
+  }, [position]);
 
   useEffect(() => {
     // Fade out previous animation
@@ -77,7 +82,7 @@ export function GenericFemale(
   }, [actions, currentAnimation]);
 
   useFrame(() => {
-    if (group.current?.position && props.position) {
+    if (group.current?.position && position) {
       const distance = group.current.position.distanceTo(
         targetPosition.current
       );
@@ -110,7 +115,7 @@ export function GenericFemale(
   });
 
   return (
-    <group ref={group} {...props} dispose={null} position={position}>
+    <group ref={group} dispose={null} position={positionMemo}>
       <group name="Root_Scene">
         <group name="RootNode">
           <group name="Armature" rotation={[-Math.PI / 2, 0, 0]} scale={100}>

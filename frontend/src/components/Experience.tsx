@@ -35,24 +35,27 @@ export const Experience = () => {
       {/* Floor */}
       <mesh
         rotation-x={-Math.PI / 2}
-        position-y={-0.001}
         receiveShadow
         onClick={(e) => {
           socket.emit("move", [e.point.x, e.point.y, e.point.z]);
         }}
         onPointerEnter={() => setOnFloor(true)}
         onPointerLeave={() => setOnFloor(false)}
+        position-z={map.size[1] / 2}
+        position-x={map.size[0] / 2}
+        position-y={0.001}
       >
-        <planeGeometry args={[100, 100]} />
+        <planeGeometry args={[map.size[0], map.size[1]]} />
         <meshStandardMaterial color="grey" />
       </mesh>
 
-      <ContactShadows blur={2} opacity={0.5} />
+      {/* <ContactShadows blur={2} opacity={0.5} /> */}
 
       {/* Render users */}
       {users.map((user) => (
         <GenericFemale
           key={user.id}
+          id={user.id}
           position={
             new Vector3(user.position[0], user.position[1], user.position[2])
           }

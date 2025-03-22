@@ -1,15 +1,16 @@
 import { useGLTF } from "@react-three/drei";
 import { useMemo } from "react";
 import { Vector3 } from "three";
-
-const GRID_UNIT = 2; // Size of each grid unit in world space
-
+import { mapState } from "../store/Atoms";
+import { useRecoilValue } from "recoil";
+import { SkeletonUtils } from "three-stdlib";
 export const Item = ({
   item,
 }: {
-  item: { name: string; size: number[]; gridPosition: number[] };
+  item: { name: string; size: number[]; gridPosition: number[]; rotation: number };
 }) => {
-  const { name, gridPosition, size } = item;
+  const map = useRecoilValue(mapState);
+  const { name, gridPosition, size, rotation } = item;
 
   // Error handling for required properties
   if (!name || !gridPosition || !size) {
@@ -19,34 +20,18 @@ export const Item = ({
 
   const { scene } = useGLTF(`/models/items/${name}.glb`);
 
-  // Convert grid position to world position
-  const position = useMemo(() => {
-    return new Vector3(
-      gridPosition[0] * GRID_UNIT,
-      0, // Y position (height)
-      gridPosition[1] * GRID_UNIT
-    );
-  }, [gridPosition]);
+  const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
 
-  // Clone and modify the scene
-  const model = useMemo(() => {
-    if (!scene) {
-      console.error(`Failed to load model for item: ${name}`);
-      return null;
-    }
-    const clonedScene = scene.clone();
-    // Scale based on item size
-    clonedScene.scale.set(
-      size[0] * GRID_UNIT * 0.5,
-      1, // Keep original height
-      size[1] * GRID_UNIT * 0.5
-    );
-    return clonedScene;
-  }, [scene, size, name]);
-
-  if (!model) {
-    return null;
-  }
-
-  return <primitive object={model} position={position} />;
+  console.log(rotation);
+  return (
+    <primitive
+      object={clone}
+      position={[
+        size[0] / map.subdivisions / 2 + gridPosition[0] / map.subdivisions,
+        0,
+        size[1] / map.subdivisions / 2 + gridPosition[1] / map.subdivisions,
+      ]}
+      rotation-y={((rotation || 0) * Math.PI) / 2}
+    />
+  );
 };

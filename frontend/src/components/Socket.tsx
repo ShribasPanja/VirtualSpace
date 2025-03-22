@@ -10,7 +10,7 @@ export const SocketManager = () => {
   const setMap = useSetRecoilState(mapState);
   const setItems = useSetRecoilState(itemsState);
   const setId = useSetRecoilState(idState);
-  useEffect(() => {    
+  useEffect(() => {
     socket.on("connect", () => {
       console.log("connected");
     });
@@ -29,7 +29,7 @@ export const SocketManager = () => {
       setUsers(users);
       console.log(users);
     });
-    return () => {      
+    return () => {
       socket.off("connect");
       socket.off("disconnect");
       socket.off("hello");
@@ -38,4 +38,3 @@ export const SocketManager = () => {
   }, []);
   return null;
 };
-

@@ -37,7 +37,6 @@ const items = {
     name: "BigVegTable",
     size: [3, 2],
   },
-
 };
 
 const map = {
@@ -46,9 +45,39 @@ const map = {
   items: [
     {
       ...items.Chair,
-      gridPosition: [0, 0],
+      gridPosition: [4, 11],
+      rotation: 1,
     },
-
+    {
+      ...items.Chair,
+      gridPosition: [4, 16],
+      rotation: 3,
+    },
+    {
+      ...items.Sink,
+      gridPosition: [8, 4],
+    },
+    {
+      ...items.Cuttingtable,
+      gridPosition: [11, 4],
+    },
+    {
+      ...items.Roundtable,
+      gridPosition: [4, 13],
+    },
+    {
+      ...items.Oven,
+      gridPosition: [14, 4],
+    },
+    {
+      ...items.Fridge,
+      gridPosition: [17, 4],
+      rotation: 1,
+    },
+    {
+      ...items.BigVegTable,
+      gridPosition: [11, 10],
+    },
   ],
 };
 
